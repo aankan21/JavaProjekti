@@ -1,8 +1,54 @@
 <!DOCTYPE html>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maailman kellonajat</title>
+    <script src="tulossa"></script>
+    
 </head>
 <body>
     <h1> Tervetuloa World times</h1>
+    <div>
+        <h1>Time Zone Converter</h1>
+    
+        <div>
+            <label for="timeInput">Enter Time (HH:MM):</label>
+            <input type="time" id="timeInput" placeholder="Enter time">
+        </div>
+    
+        <div>
+            <label for="fromTimeZone">From Time Zone:</label>
+            <select id="fromTimeZone">
+                <option value="Europe/Helsinki">Finland (Helsinki)</option>
+                <option value="America/New_York">New York</option>
+                <option value="Europe/London">London</option>
+                <option value="Asia/Tokyo">Tokyo</option>
+                <option value="Australia/Sydney">Sydney</option>
+                <option value="Asia/Dubai">Dubai</option>
+                <option value="America/Sao_Paulo">São Paulo</option>
+                <option value="Africa/Johannesburg">Johannesburg</option>
+            </select>
+        </div>
+    
+        <div>
+            <label for="toTimeZone">To Time Zone:</label>
+            <select id="toTimeZone">
+                <option value="Europe/Helsinki">Finland (Helsinki)</option>
+                <option value="America/New_York">New York</option>
+                <option value="Europe/London">London</option>
+                <option value="Asia/Tokyo">Tokyo</option>
+                <option value="Australia/Sydney">Sydney</option>
+                <option value="Asia/Dubai">Dubai</option>
+                <option value="America/Sao_Paulo">São Paulo</option>
+                <option value="Africa/Johannesburg">Johannesburg</option>
+            </select>
+        </div>
+    
+        <button onclick="convertTime()">Convert</button>
+    
+        <h3>Converted Time: <span id="result"></span></h3>
+    
+
+    
 </body>
 </html>
