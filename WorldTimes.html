@@ -1,48 +1,53 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maailman kellonajat</title>
+    <title>Maailman Kellonajat</title>
     <script src="WorldTimes.js"></script>
-    
 </head>
 <body>
-    <h1> Tervetuloa World times</h1>
-    <div>
-        <h1>Time Zone Converter</h1>
-    
-        <div>
+    <div class="container">
+        <h1 style="text-align: center;">Time Zone Converter</h1>
+        
+        <div style="margin-bottom: 20px;">
             <label for="timeInput">Enter Time (HH:MM):</label>
-            <input type="time" id="timeInput" placeholder="Enter time">
+            <input type="time" id="timeInput" placeholder="Enter time" style="width: 100%; padding: 8px; margin-top: 8px;">
         </div>
-    
-        <div>
+
+        <div style="margin-bottom: 20px;">
             <label for="fromTimeZone">From Time Zone:</label>
-            <select id="fromTimeZone">
+            <select id="fromTimeZone" style="width: 100%; padding: 8px; margin-top: 8px;">
             </select>
         </div>
-    
-        <div>
+
+        <div style="margin-bottom: 20px;">
             <label for="toTimeZone">To Time Zone:</label>
-            <select id="toTimeZone">
+            <select id="toTimeZone" style="width: 100%; padding: 8px; margin-top: 8px;">
+
             </select>
         </div>
-    
-        <button onclick="convertTime()">Convert</button>
-    
-        <h3>Converted Time: <span id="result"></span></h3>
-        <h2>Live World Times</h2>
-        <table border="1">
+
+        <div style="margin-bottom: 20px; text-align: center;">
+            <button onclick="convertTime()" style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none; cursor: pointer;">
+                Convert
+            </button>
+        </div>
+
+        <h3 style="text-align: center;">Converted Time: <span id="result" style="font-weight: bold;"></span></h3>
+
+        <h2 style="text-align: center;">Live World Times</h2>
+        <table border="1" style="width: 100%; margin-top: 20px; border-collapse: collapse; text-align: center;">
             <thead>
                 <tr>
-                <th>Country/Zone</th>
-                <th>Zone ID</th>
-                <th>Current Time</th>
-            </tr>
-        </thead>
-    <tbody id="timeZoneTableBody"></tbody>
-</table>
-
+                    <th>Country/Zone</th>
+                    <th>Zone ID</th>
+                    <th>Current Time</th>
+                </tr>
+            </thead>
+            <tbody id="timeZoneTableBody">
+            </tbody>
+        </table>
     </div>
 </body>
 </html>
