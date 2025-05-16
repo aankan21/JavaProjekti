@@ -1,7 +1,6 @@
-
 let timeZoneData = {};
 
-const apiKey = "5WIRC1IOHL4O"; 
+const apiKey = "5WIRC1IOHL4O";  
 
 async function fetchTimeZonesFromAPI() {
     try {
@@ -25,7 +24,6 @@ async function fetchTimeZonesFromAPI() {
     }
 }
 
-
 function convertTime() {
     const timeInput = document.getElementById("timeInput").value;
     const fromZone = document.getElementById("fromTimeZone").value;
@@ -42,24 +40,20 @@ function convertTime() {
     now.setHours(hours);
     now.setMinutes(minutes);
 
-    const fromTime = new Intl.DateTimeFormat("en-GB", {
-        timeZone: fromZone,
+    const fromTime = formatTime(fromZone, now);
+    const toTime = formatTime(toZone, now);
+
+    result.innerHTML = `<strong>${toTime}</strong>`;
+}
+
+
+function formatTime(zone, date) {
+    return new Intl.DateTimeFormat("en-GB", {
+        timeZone: zone,
         hour: '2-digit',
         minute: '2-digit',
         hour12: false
-    }).format(now);
-
-    const toTime = new Intl.DateTimeFormat("en-GB", {
-        timeZone: toZone,
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false
-    }).format(now);
-
-    result.innerHTML = `
-        <strong>${fromTime}</strong> in <strong>${formatZone(fromZone)}</strong><br>
-        ➡️ <strong>${toTime}</strong> in <strong>${formatZone(toZone)}</strong>
-    `;
+    }).format(date);
 }
 
 
@@ -67,21 +61,15 @@ function populateTimeZones() {
     const fromDropdown = document.getElementById("fromTimeZone");
     const toDropdown = document.getElementById("toTimeZone");
 
-    for (const zone in timeZoneData) {
-        const name = timeZoneData[zone];
+    Object.keys(timeZoneData).forEach(zone => {
+        const option1 = createOption(zone);
+        const option2 = createOption(zone);
 
-        const option1 = document.createElement("option");
-        option1.value = zone;
-        option1.text = `${name} (${zone})`;
         fromDropdown.add(option1);
-
-        const option2 = document.createElement("option");
-        option2.value = zone;
-        option2.text = `${name} (${zone})`;
         toDropdown.add(option2);
-    }
+    });
 
-
+    
     fromDropdown.value = "Europe/Helsinki";
     toDropdown.value = "America/New_York";
 
@@ -89,11 +77,19 @@ function populateTimeZones() {
 }
 
 
+function createOption(zone) {
+    const option = document.createElement("option");
+    option.value = zone;
+    option.text = timeZoneData[zone];
+    return option;
+}
+
+
 function generateTimeZoneTable() {
     const tableBody = document.getElementById("timeZoneTableBody");
     tableBody.innerHTML = '';
 
-    for (const zone in timeZoneData) {
+    Object.keys(timeZoneData).forEach(zone => {
         const row = document.createElement("tr");
 
         const nameCell = document.createElement("td");
@@ -105,24 +101,15 @@ function generateTimeZoneTable() {
         row.appendChild(zoneCell);
 
         const timeCell = document.createElement("td");
-        const timeNow = new Intl.DateTimeFormat("en-GB", {
-            timeZone: zone,
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: false
-        }).format(new Date());
+        const timeNow = formatTime(zone, new Date());
         timeCell.textContent = timeNow;
         row.appendChild(timeCell);
 
         tableBody.appendChild(row);
-    }
+    });
 }
 
 
-function formatZone(zone) {
-    return timeZoneData[zone] || zone;
-}
-
+window.onload = fetchTimeZonesFromAPI;
 
 setInterval(generateTimeZoneTable, 30000);
-window.onload = fetchTimeZonesFromAPI;
