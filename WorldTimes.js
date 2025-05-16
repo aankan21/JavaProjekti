@@ -1,16 +1,31 @@
-// Time zone data
-const timeZoneData = {
-    "Europe/Helsinki": "Finland",
-    "America/New_York": "New York",
-    "Europe/London": "London",
-    "Asia/Tokyo": "Tokyo",
-    "Australia/Sydney": "Sydney",
-    "Asia/Dubai": "Dubai",
-    "America/Sao_Paulo": "São Paulo",
-    "Africa/Johannesburg": "Johannesburg"
-};
 
-// Converts time from one time zone to another
+let timeZoneData = {};
+
+const apiKey = "5WIRC1IOHL4O"; 
+
+async function fetchTimeZonesFromAPI() {
+    try {
+        const response = await fetch(`http://api.timezonedb.com/v2.1/list-time-zone?key=${apiKey}&format=json`);
+        const data = await response.json();
+
+        if (data.status === "OK") {
+            timeZoneData = {};
+
+            data.zones.forEach(zone => {
+                timeZoneData[zone.zoneName] = `${zone.countryName} (${zone.zoneName})`;
+            });
+
+            populateTimeZones(); 
+            generateTimeZoneTable(); 
+        } else {
+            console.error("API Error:", data.message);
+        }
+    } catch (err) {
+        console.error("Fetch failed:", err);
+    }
+}
+
+
 function convertTime() {
     const timeInput = document.getElementById("timeInput").value;
     const fromZone = document.getElementById("fromTimeZone").value;
@@ -47,7 +62,7 @@ function convertTime() {
     `;
 }
 
-// Populate dropdowns for time zones
+
 function populateTimeZones() {
     const fromDropdown = document.getElementById("fromTimeZone");
     const toDropdown = document.getElementById("toTimeZone");
@@ -66,14 +81,14 @@ function populateTimeZones() {
         toDropdown.add(option2);
     }
 
-    // Set defaults
+
     fromDropdown.value = "Europe/Helsinki";
     toDropdown.value = "America/New_York";
 
     generateTimeZoneTable();
 }
 
-// Generate live time table
+
 function generateTimeZoneTable() {
     const tableBody = document.getElementById("timeZoneTableBody");
     tableBody.innerHTML = '';
@@ -103,11 +118,11 @@ function generateTimeZoneTable() {
     }
 }
 
-// Return readable name
+
 function formatZone(zone) {
     return timeZoneData[zone] || zone;
 }
 
-// Auto-refresh live time table
+
 setInterval(generateTimeZoneTable, 30000);
-window.onload = populateTimeZones;
+window.onload = fetchTimeZonesFromAPI;
