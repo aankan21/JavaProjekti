@@ -109,7 +109,8 @@ function generateTimeZoneTable() {
     });
 }
 
-
 window.onload = fetchTimeZonesFromAPI;
 
 setInterval(generateTimeZoneTable, 30000);
+
+
